@@ -35,7 +35,7 @@ model Assignment {
 }
 
 model StudySession {
-  id              String            @default(cuid())
+  id              String            @id @default(cuid())
   subject         String            
   date            DateTime
   duration        Int //in minutes
@@ -49,13 +49,13 @@ model StudySession {
 }
 
 model SubjectTarget {
-  id        String   @id @default(cuid())
-  subject   String
-  dailyHours Float   @default(0)
-  weeklyHours Float  @default(0)
-  userId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String            @id @default(cuid())
+  subject         String
+  dailyHours      Float             @default(0)
+  weeklyHours     Float             @default(0)
+  userId          String
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
   
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   
