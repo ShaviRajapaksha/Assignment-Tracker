@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../node_modules/.prisma/client"
 }
 
@@ -8,54 +8,54 @@ datasource db {
 }
 
 model User {
-  id              String            @id  @default(cuid())
-  email           String            @unique
-  name            String?       
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-
-  assignments     Assignment[]
-  studySessions   StudySession[]
-  subjectTargets  SubjectTarget[]
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  assignments    Assignment[]
+  studySessions  StudySession[]
+  subjectTargets SubjectTarget[]
 }
 
 model Assignment {
-  id              String            @id @default(cuid())
-  title           String        
-  description     String?
-  priority        Priority          @default(MEDIUM)
-  subject         String
-  dueDate         DateTime
-  status          AssignmentStatus  @default(NOT_STARTED)
-  userId          String
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-
+  id          String          @id @default(cuid())
+  title       String
+  description String?
+  priority    Priority         @default(MEDIUM)
+  subject     String
+  dueDate     DateTime
+  status      AssignmentStatus @default(NOT_STARTED)
+  userId      String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model StudySession {
-  id              String            @id @default(cuid())
-  subject         String            
-  date            DateTime
-  duration        Int //in minutes
-  notes           String?
-  isAutoLogged    Boolean           @default(false)
-  userId          String
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-
+  id          String   @id @default(cuid())
+  subject     String
+  date        DateTime
+  duration    Int      // in minutes
+  notes       String?
+  isAutoLogged Boolean @default(false)
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model SubjectTarget {
-  id              String            @id @default(cuid())
-  subject         String
-  dailyHours      Float             @default(0)
-  weeklyHours     Float             @default(0)
-  userId          String
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
+  id        String   @id @default(cuid())
+  subject   String
+  dailyHours Float   @default(0)
+  weeklyHours Float  @default(0)
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   
